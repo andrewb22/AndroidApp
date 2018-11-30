@@ -1,0 +1,5 @@
+<resources>
+    <!--<string name="app_name">Combination1</string>-->
+    <string name="app_name">Fitness Duo</string>
+    <color name="white">#FFFFFF</color>
+</resources>

@@ -43,50 +43,50 @@ public class ImportExport extends AppCompatActivity {
         //mDatabaseHelper = new DatabaseHelper(this);
         mDatabaseHelper = DatabaseHelper.getInstance(this);
 
-        Button makeFileButton = (Button) findViewById(net.FitnessDuo.combination2.R.id.exportButton);
-        makeFileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isStoragePermissionGranted()){
-                    File testExportTextFile = null;
-                    try {
-                        testExportTextFile = createTextFile("November29Test");
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    if (testExportTextFile != null){
+//        Button makeFileButton = (Button) findViewById(net.FitnessDuo.combination2.R.id.exportButton);
+//        makeFileButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(isStoragePermissionGranted()){
+//                    File testExportTextFile = null;
+//                    try {
+//                        testExportTextFile = createTextFile("November29Test");
+//                    } catch (IOException ex) {
+//                        ex.printStackTrace();
+//                    }
+//                    if (testExportTextFile != null){
+//
+//                    }
+//                }
+//            }
+//        });
 
-                    }
-                }
-            }
-        });
-
-        Button importFileButton = (Button) findViewById(net.FitnessDuo.combination2.R.id.importButton);
-        importFileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    EditText etFN = (EditText) findViewById(net.FitnessDuo.combination2.R.id.editTextImportFilename);
-                    String csvFileName = etFN.getText().toString();
-                    String fullCSVFileName = Environment.getExternalStorageDirectory() + "/FitnessPhotos" + "/" + csvFileName;
-                    File csvfile = new File(fullCSVFileName);
-                    CSVReader reader = new CSVReader(new FileReader(fullCSVFileName));
-                    String [] nextLine;
-                    //int numLinesCounter = 0;
-                    while ((nextLine = reader.readNext()) != null) {
-                        // nextLine[] is an array of values from the line
-                        //System.out.println(nextLine[0] + nextLine[1] + "etc...");
-                        //Log.d(TAG, "onClick: " + nextLine[0] + nextLine[1] + "etc...");
-                        //Log.d(TAG, "onClick: " + nextLine[0]);
-                        AddData(nextLine[0], Long.parseLong(nextLine[1]), nextLine[2]);
-                    }
-                }catch(Exception e){
-                    e.printStackTrace();
-                    //Toast.makeText(this, "The specified file was not found", Toast.LENGTH_SHORT).show();
-                    toastMessage("File Not Found.");
-                }
-            }
-        });
+//        Button importFileButton = (Button) findViewById(net.FitnessDuo.combination2.R.id.importButton);
+////        importFileButton.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                try{
+////                    EditText etFN = (EditText) findViewById(net.FitnessDuo.combination2.R.id.editTextImportFilename);
+////                    String csvFileName = etFN.getText().toString();
+////                    String fullCSVFileName = Environment.getExternalStorageDirectory() + "/FitnessPhotos" + "/" + csvFileName;
+////                    File csvfile = new File(fullCSVFileName);
+////                    CSVReader reader = new CSVReader(new FileReader(fullCSVFileName));
+////                    String [] nextLine;
+////                    //int numLinesCounter = 0;
+////                    while ((nextLine = reader.readNext()) != null) {
+////                        // nextLine[] is an array of values from the line
+////                        //System.out.println(nextLine[0] + nextLine[1] + "etc...");
+////                        //Log.d(TAG, "onClick: " + nextLine[0] + nextLine[1] + "etc...");
+////                        //Log.d(TAG, "onClick: " + nextLine[0]);
+////                        AddData(nextLine[0], Long.parseLong(nextLine[1]), nextLine[2]);
+////                    }
+////                }catch(Exception e){
+////                    e.printStackTrace();
+////                    //Toast.makeText(this, "The specified file was not found", Toast.LENGTH_SHORT).show();
+////                    toastMessage("File Not Found.");
+////                }
+////            }
+////        });
 
         Button fileExploreButton = (Button) findViewById(R.id.fileExploreButton);
         fileExploreButton.setOnClickListener(new View.OnClickListener() {
@@ -171,9 +171,9 @@ public class ImportExport extends AppCompatActivity {
         {
             Log.e("Exception", "File write failed: " + e.toString());
         }
-        EditText recentFileNameET = (EditText) findViewById(net.FitnessDuo.combination2.R.id.editTextRecentFilename);
-        String textFileName = textFile.toString().substring(textFile.toString().lastIndexOf("/") + 1);
-        recentFileNameET.setText(textFileName);
+//        EditText recentFileNameET = (EditText) findViewById(net.FitnessDuo.combination2.R.id.editTextRecentFilename);
+//        String textFileName = textFile.toString().substring(textFile.toString().lastIndexOf("/") + 1);
+//        recentFileNameET.setText(textFileName);
         return textFile;
     }
 
@@ -187,7 +187,7 @@ public class ImportExport extends AppCompatActivity {
         boolean insertData = mDatabaseHelper.addData(newEntryPhotoPath, newEntryDate, newEntryWeight);
 
         if(insertData){
-            toastMessage("Data successfully inserted!");
+            //toastMessage("Data successfully inserted!");
         } else {
             toastMessage("Something went wrong");
         }
@@ -216,12 +216,13 @@ public class ImportExport extends AppCompatActivity {
         if(requestCode == READ_REQUEST_CODE){
             if(resultCode == Activity.RESULT_OK){
                 CSVfileToImport = new File(data.getData().getPath());
-                EditText recentFileNameET = (EditText) findViewById(net.FitnessDuo.combination2.R.id.editTextRecentFilename);
-                String textFileName = CSVfileToImport.getName();
-                recentFileNameET.setText(textFileName);
+                String fileName = CSVfileToImport.getName();
+//                EditText recentFileNameET = (EditText) findViewById(net.FitnessDuo.combination2.R.id.editTextRecentFilename);
+//                String textFileName = CSVfileToImport.getName();
+//                recentFileNameET.setText(textFileName);
                 try{
-                    String fullCSVFileName = Environment.getExternalStorageDirectory() + "/FitnessPhotos" + "/" + textFileName;
-                    File csvfile = new File(fullCSVFileName);
+                    String fullCSVFileName = Environment.getExternalStorageDirectory() + "/FitnessPhotos" + "/" + fileName;
+                    //File csvfile = new File(fullCSVFileName);
                     CSVReader reader = new CSVReader(new FileReader(fullCSVFileName));
                     String [] nextLine;
                     //int numLinesCounter = 0;
@@ -232,6 +233,7 @@ public class ImportExport extends AppCompatActivity {
                         //Log.d(TAG, "onClick: " + nextLine[0]);
                         AddData(nextLine[0], Long.parseLong(nextLine[1]), nextLine[2]);
                     }
+                    toastMessage("Import Successful!");
                 }catch(Exception e){
                     e.printStackTrace();
                     //Toast.makeText(this, "The specified file was not found", Toast.LENGTH_SHORT).show();
